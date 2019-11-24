@@ -14,13 +14,13 @@ Our project aims at separating the desired scene from the undesired reflections 
 In this project we focus on removing the reflection using a single image based on Depth of Field (DoF) confidence maps.
 
 
-<p align="center">
-  <img src="https://github.com/ayush003/DoF-guided-reflection-removal/blob/master/Source%20Image/2.jpg" title="hover text">
-  <img src="https://github.com/ayush003/DoF-guided-reflection-removal/blob/master/Output%20image/ob1.jpg" alt="hover text">
+<p align="left">
+  <img src="https://github.com/ayush003/DoF-guided-reflection-removal/blob/master/Source%20Image/2.jpg" width="250" title="hover text">
+</p>
+<p align="right">
+  <img src="https://github.com/ayush003/DoF-guided-reflection-removal/blob/master/Output%20image/ob1.jpg" width="300" alt="hover text">
 </p>
 
-
-|<img src="https://github.com/ayush003/DoF-guided-reflection-removal/blob/master/Source%20Image/2.jpg" width="350">|<img src="https://github.com/ayush003/DoF-guided-reflection-removal/blob/master/Output%20image/ob1.jpg" width="350">|
 ## Requirements
 MATLAB version: R2018b or above
 
