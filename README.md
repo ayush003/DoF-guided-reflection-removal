@@ -1,9 +1,13 @@
 # DoF-guided-reflection-removal-algorithm
 ## DIP Team 001
 
-Members : 
-Ayush Singhania, Siddharth Gaur, Gaurav Aswani
 
+Members : 
+```
+Ayush Singhania 20171031
+Siddharth Gaur  20171198 
+Gaurav Aswani   20171107
+```
 
 When taking photos through transparent surfaces, the captured pictures are usually a mixture of both the desired scene and undesired reflections.
 Our project aims at separating the desired scene from the undesired reflections using reflection removal techniques. Various methods have been proposed for achieving this target. 
