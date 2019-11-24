@@ -26,7 +26,7 @@ for disp = 1 : filtSz
     for j=1:h-1
         for i=1:w
             indexGy1(y) = sub2ind([h w],j,i);
-            indexGy2(y) = sub2ind([h w],j,i);
+            indexGy2(y) = sub2ind([h w],j+disp,i);
             valueGy(y) = D(disp);
             y = y+1;
         end
