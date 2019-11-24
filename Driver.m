@@ -20,8 +20,8 @@ Pyramidb = GetPyramid(b);
 % L channel %
 [N1,N2,N3] = size(PyramidL{1});
 dl1 = PyramidL{1};
-dl2 = imreasize(PyramidL{2},[N1 N2]); % upscaling
-dl3 = imreasize(PyramidL{3},[N1 N2]); % upscaling
+dl2 = imresize(PyramidL{2},[N1 N2]); % upscaling
+dl3 = imresize(PyramidL{3},[N1 N2]); % upscaling
 
 t = 0.4; % lambda = 0.4
 Lmap = (t*dl2 + (1-t)*dl3).*(dl1);
@@ -30,8 +30,8 @@ map1 = heaviside(Lmap - Thl); % edgemap for L color space
 
 % a channel %
 da1 = Pyramida{1};
-da2 = imreasize(Pyramida{2},[N1 N2]); % upscaling
-da3 = imreasize(Pyramida{3},[N1 N2]); % upscaling
+da2 = imresize(Pyramida{2},[N1 N2]); % upscaling
+da3 = imresize(Pyramida{3},[N1 N2]); % upscaling
 
 amap = (t*da2 + (1-t)*da3).*(da1);
 Tha = Thl/1.5;
@@ -39,8 +39,8 @@ map2 = heaviside(amap - Tha); % edgemap for a color space
 
 % b channel %
 db1 = Pyramidb{1};
-db2 = imreasize(Pyramidb{2},[N1 N2]); % upscaling
-db3 = imreasize(Pyramidb{3},[N1 N2]); % upscaling
+db2 = imresize(Pyramidb{2},[N1 N2]); % upscaling
+db3 = imresize(Pyramidb{3},[N1 N2]); % upscaling
 
 bmap = (t*db2 + (1-t)*db3).*(db1);
 Thb = Thl/1.5;
