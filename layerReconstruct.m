@@ -58,7 +58,7 @@ for j=1:num_iterations
       error = 1./error;
       E = spdiags(error,0,length(f),length(f));
       x = (A'*E*A)\(A'*E*b);
-      fprintf('num_iterationsation = %d, current error = %g \n', j, sum(abs(A*x-b)));   
+      fprintf('num_iterations= %d, current error = %g \n', j, sum(abs(A*x-b)));   
 end
 
 IR=reshape(x,h,w);
