@@ -1,0 +1,10 @@
+function [Hp,rows,cols] = PatchExtract(size,p)
+    window=5;
+    y=floor(p/size(1))+1; 
+    p=rem(p,size(1)); 
+    x=floor(p)+1;
+    rows = max(x-window,1):min(x+window,size(1));
+    cols = (max(y-window,1):min(y+window,size(2)))';
+    X = rows(ones(length(cols),1),:);
+    Y = cols(:,ones(1,length(rows)));
+    Hp = X+(Y-1)*size(1);
