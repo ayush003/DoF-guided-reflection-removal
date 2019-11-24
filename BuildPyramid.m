@@ -1,38 +1,47 @@
-function [ Pyramid ] = BuildPyramid(img)
-    nbins = 41;
-    k = [3,5,7];
+function [ Pyramid ] = GetPyramid(img)
+% img : input image for each channel in CIELAB space
+% Pyramid : 1x3 array with DoF of three different resolutions
 
-    L = im2double(img);
-    f1 = [1,-1];f2 = [1;-1];
+    nbins = 41;         %number of bins for histogram
+    k = [3,5,7];        %size of the gaussian blurring filter
 
-    rp = [1,0.8,0.5];%Resize Parameter
-    Pyramid = cell(1,3);
-    D = cell(1,3);
+    L = im2double(img); %for floating point operations
+    f1 = [1,-1];        %for finding gradients along rows
+    f2 = [1;-1];        %for finding gradients along columns
 
-    for kk = 1:3
-        im = imresize(L,rp(kk));
-        
-        rhox1 = -imfilter(im,f1,'circular');
-        rhox1 = (rhox1+1)./2;
-        px1 = makeHistogram(nbins,rhox1);
+    rp = [1,0.8,0.5];   %Resize Parameter for each level of the pyramid
     
+    Pyramid = cell(1,3);    %initialising an empty pyramid
+    D = cell(1,3);          %storing the KL divergence of the blurred and reference image for each resolution
+   
+    for i = 1:3
+        im = imresize(L,rp(i)); %different resolution image for each level of the pyramid
+        
+        rhox1 = -imfilter(im,f1,'circular'); %finding gradient along rows   
+        rhox1 = (rhox1+1)./2;                %rescaling the values
+        px1_struct = histogram(rhox1,nbins); %computing the histogram for calculating the probabilities
+        px1 = px1_struct.Values;               
+        
         rhoy1 = -imfilter(im,f2,'circular');
         rhoy1 = (rhoy1+1)./2;
-        py1 = makeHistogram(nbins,rhoy1);
+        py1_struct = histogram(rhox1,nbins);
+        py1 = py1_struct.Values;
     
-        for ii = 1:3
+        for j = 1:3
             [N1,N2] = size(im);
-            G = fspecial('gaussian',[k(ii) k(ii)],5);       
+            G = fspecial('gaussian',[k(j) k(j)],5); %Gaussian blurring filter with mean = 0 and standard deviation = 5      
             rhoxk = imfilter(im,G,'same');
-            rhoyk = imfilter(im,G,'same');
+            rhoyk = rhoxk;
         
             rhoxk =  -imfilter(rhoxk,f1,'circular');
-            rhoxk = (rhoxk+1)./2; %This is very important, Otherwise we cannot get what we want.
-            pxk = makeHistogram(nbins,rhoxk);
+            rhoxk = (rhoxk+1)./2; 
+            pxk_struct = histogram(rhoxk,nbins);
+            pxk = pxk_struct.Values;
         
             rhoyk =  -imfilter(rhoyk,f2,'circular');
-            rhoyk = (rhoyk+1)./2; %This is very important, Otherwise we cannot get what we want.
-            pyk = makeHistogram(nbins,rhoyk);
+            rhoyk = (rhoyk+1)./2; 
+            pyk_struct = histogram(rhoxk,nbins);
+            pyk = pyk_struct.Values;
 
             map = zeros(N1,N2);
             for y = 2 : N1-1
@@ -40,31 +49,13 @@ function [ Pyramid ] = BuildPyramid(img)
                     map(y,x) = CalculateLogLikehood(x,y,rhoxk,rhox1,rhoyk,rhoy1,pxk,px1,pyk,py1,nbins);
                 end
             end
-            D{ii} = map/70; 
+            D{j} = map/70; 
         end
         DoF = D{1}+D{2}+D{3};
-        Pyramid{kk} = DoF;
+        Pyramid{i} = DoF;
     end
     
-    function h = makeHistogram(nbins,img)   
-        sum = 0;
-        h = zeros(1,nbins);
-        [height,width] = size(img);
-        for yy = 1:height
-            for xx = 1:width
-                v = img(yy,xx);
-                bin = uint8(v*nbins);
-                if(bin>=nbins)
-                    bin = bin-1;
-                end
-                h(bin) = h(bin)+1;
-                sum = sum+1;
-            end
-            
-        end
-        h(find(h==0)) = 0.00000001;
-        h = h./sum;
-
+  
     function LL = CalculateLogLikehood(x,y,dxk,dx1,dyk,dy1,pxk,px1,pyk,py1,nbins)
         border = 2;
         LL = 0;
