@@ -15,8 +15,8 @@ In this project we focus on removing the reflection using a single image based o
 
 
 <p align="center">
-  <img src="https://github.com/ayush003/DoF-guided-reflection-removal/blob/master/Source%20Image/2.jpg" width="250" title="hover text" >
-  <img src="https://github.com/ayush003/DoF-guided-reflection-removal/blob/master/Output%20image/ob1.jpg" width="300" alt="hover text" >
+  <img src="https://github.com/ayush003/DoF-guided-reflection-removal/blob/master/Source%20Image/2.jpg" title="hover text" >
+  <img src="https://github.com/ayush003/DoF-guided-reflection-removal/blob/master/Output%20image/ob1.jpg" alt="hover text" >
 </p>
 
 ## Requirements
