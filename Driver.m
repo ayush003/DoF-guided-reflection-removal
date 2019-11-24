@@ -32,40 +32,40 @@ da1 = Pyramida{1};
 da2 = imresize(Pyramida{2},[N1 N2]);    % upscaling to the resolution of the original image
 da3 = imresize(Pyramida{3},[N1 N2]);    % upscaling to the resolution of the original image
 
-amap = (t*da2 + (1-t)*da3).*(da1);      % Dof of a channel
-Tha = Thl/1.5;                          
-map2 = heaviside(amap - Tha); % edgemap for a color space
+amap = (t*da2 + (1-t)*da3).*(da1);      % DoF of a channel
+Tha = Thl/1.5;                          % Threshold for a channel
+map2 = heaviside(amap - Tha);           % edgemap for a color space
 
 % b channel %
 db1 = Pyramidb{1};
-db2 = imresize(Pyramidb{2},[N1 N2]); % upscaling
-db3 = imresize(Pyramidb{3},[N1 N2]); % upscaling
+db2 = imresize(Pyramidb{2},[N1 N2]);    % upscaling to the resolution of the original image
+db3 = imresize(Pyramidb{3},[N1 N2]);    % upscaling to the resolution of the original image
 
-bmap = (t*db2 + (1-t)*db3).*(db1);
-Thb = Thl/1.5;
-map3 = heaviside(bmap - Thb); % edgemap for b color space
+bmap = (t*db2 + (1-t)*db3).*(db1);      % DoF of b channel
+Thb = Thl/1.5;                          % threshold for b channel
+map3 = heaviside(bmap - Thb);           % edgemap for b color space
 
-EdgeBackground = map1|map2|map3; % edgemap for Background
+EdgeBackground = map1|map2|map3;        % edgemap for Background
 %%
 %% Reflection image %%
-w = fspecial('sobel'); % 2D sobel filter
+w = fspecial('sobel');                  % 2D sobel filter
 for ch = 1:size(im,3)
-    im = im2double(im);
-    Gx(:,:,ch) = imfilter(im(:,:,ch),w); % gradient along x
-    Gy(:,:,ch) = imfilter(im(:,:,ch),w'); % gradient along y
+    im = im2double(im);                     % For floating point operation
+    Gx(:,:,ch) = imfilter(im(:,:,ch),w);    % gradient along x
+    Gy(:,:,ch) = imfilter(im(:,:,ch),w');   % gradient along y
 end
-grad = sqrt(Gx.^2 + Gy.^2);
-grad = max(grad,[],3); % image gradient
+grad = sqrt(Gx.^2 + Gy.^2);                 % Combined gradient of x and y direction
+grad = max(grad,[],3);                      % gradient image of the original image
 reflectionPoints = find(grad<0.3&grad>0.05); % inital refection points
 mapR = zeros(N1,N2);
-mapR(reflectionPoints) = 1; % initial reflection edgemap
+mapR(reflectionPoints) = 1;                 % initial reflection edgemap
 
-EdgeReflection = mapR;
+EdgeReflection = mapR;                      % final reflection edgemap which will be updated
 
 % Masking from background edgemap and final reflection edgemap generation
 for i = 1:length(reflectionPoints)
-    pnt = reflectionPoints(i);
-    [Hp,rows,cols] = PatchExtract([N1,N2],pnt);
+    pnt = reflectionPoints(i);                  % index around which the patch is to be extracted
+    [Hp,rows,cols] = PatchExtract([N1,N2],pnt); % 
     m = EdgeBackground(Hp);
     flag = find(m==1);
     if(EdgeBackground(pnt)==1||~isempty(flag)) 
