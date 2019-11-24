@@ -14,7 +14,7 @@ L = Im(:,:,1); a = Im(:,:,2); b = Im(:,:,3); % 3 channels L, a and b
 % images of the same reference image of one channel
 PyramidL = GetPyramid(L);
 Pyramida = GetPyramid(a);
-Pyramida = GetPyramid(b);
+Pyramidb = GetPyramid(b);
 
 %%% Fusion of 3 DoFs into one DoF for one channel %%%
 % L channel %
