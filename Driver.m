@@ -1,8 +1,7 @@
-clc;
-clear all;
+clc;clear;close all;
 
 tic
-im = imread("./Source Image/1.jpg");                         % reads the input image
+im = imread('./Source Image/1.jpg');            % reads the input image
 
 %% Background Image %%
 lab = makecform('srgb2lab');                    % creates color transformation structure
@@ -73,7 +72,6 @@ for i = 1:length(reflectionPoints)
     end
 end
 
-%%
 %% Layer Reconstruction %%
 indR = find(EdgeReflection==1);
 indB = find(EdgeBackground==1);
