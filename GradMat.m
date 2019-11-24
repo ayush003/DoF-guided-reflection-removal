@@ -1,6 +1,6 @@
 function [gx,gy,gxx,gyy,gxy] = GradMat(w,h)
-
-D = [1 -1];
+% function to return the gradient matrix 
+D = [1,-1];    
 filtSz = 1;
 sz = w*h;
 
@@ -14,7 +14,7 @@ valueGy = zeros(sz*2,1);
 x=1;
 y=1;
 
-for disp = 1 : filtSz
+for disp = 0 : filtSz
     for i = 1:w-1
         for j = 1:h
             indexGx1(x) = sub2ind([h w],j,i);
