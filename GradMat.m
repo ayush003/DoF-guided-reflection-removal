@@ -1,7 +1,7 @@
 function [gx,gy,gxx,gyy,gxy] = GradMat(w,h)
 
 D = [1 -1];
-filtSz = 2;
+filtSz = 1;
 sz = w*h;
 
 indexGx1 = zeros(sz*2,1);
@@ -19,7 +19,7 @@ for disp = 1 : filtSz
         for j = 1:h
             indexGx1(x) = sub2ind([h w],j,i);
             indexGx2(x) = sub2ind([h w],j,i+disp);
-            valueGx(x) = D(disp);
+            valueGx(x) = D(disp+1);
             x = x+1;
         end
     end
@@ -27,12 +27,12 @@ for disp = 1 : filtSz
         for i=1:w
             indexGy1(y) = sub2ind([h w],j,i);
             indexGy2(y) = sub2ind([h w],j+disp,i);
-            valueGy(y) = D(disp);
+            valueGy(y) = D(disp+1);
             y = y+1;
         end
     end
 end
-
+x = x-1; y = y-1;
 indexGx1 = indexGx1(1:x);
 indexGx2 = indexGx2(1:x);
 indexGy1 = indexG21(1:y);
