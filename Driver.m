@@ -84,7 +84,7 @@ G = struct;
 [G.gx,G.gy,G.gxx,G.gyy,G.gxy] = GradMat(w,h);
 
 for ch = 1:3
-    [R(:,:,ch),B(:,:,ch)] = layerReconstruct(im(:,:,ch),indR,indB);
+    [R(:,:,ch),B(:,:,ch)] = layerReconstruct(im(:,:,ch),G,indR,indB);
 end
 
 %%
