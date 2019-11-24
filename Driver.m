@@ -96,4 +96,3 @@ figure;
 title('Background Image');
 imshow(B);
 toc
-imshow(R);
