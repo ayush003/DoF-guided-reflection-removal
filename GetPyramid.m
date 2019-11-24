@@ -2,7 +2,7 @@ function [ Pyramid ] = GetPyramid(img)
 % img : input image for each channel in CIELAB space
 % Pyramid : 1x3 array with DoF of three different resolutions
 
-    nbins = 41;         %number of bins for histogram
+    nbins = 41;         %number of bins for makeHistogram
     k = [3,5,7];        %size of the gaussian blurring filter
 
     L = im2double(img); %for floating point operations
@@ -19,13 +19,11 @@ function [ Pyramid ] = GetPyramid(img)
         
         rhox1 = -imfilter(im,f1,'circular'); %finding gradient along rows   
         rhox1 = (rhox1+1)./2;                %rescaling the values
-        px1_struct = histogram(rhox1,nbins); %computing the histogram for calculating the probabilities
-        px1 = px1_struct.Values;               
+        px1 = makeHistogram(rhox1,nbins);               
         
         rhoy1 = -imfilter(im,f2,'circular'); %finding gradient along columns
         rhoy1 = (rhoy1+1)./2;
-        py1_struct = histogram(rhox1,nbins);
-        py1 = py1_struct.Values;
+        py1 = makeHistogram(rhoy1,nbins);
     
         for j = 1:3
             [N1,N2] = size(im);
@@ -35,13 +33,11 @@ function [ Pyramid ] = GetPyramid(img)
         
             rhoxk =  -imfilter(rhoxk,f1,'circular'); %finding gradient along rows    
             rhoxk = (rhoxk+1)./2;                    %rescaling the values
-            pxk_struct = histogram(rhoxk,nbins);     %computing the histogram for calculating the probabilities
-            pxk = pxk_struct.Values;
+           pxk = makeHistogram(rhoxk,nbins);
         
             rhoyk =  -imfilter(rhoyk,f2,'circular'); %finding gradient along columns
             rhoyk = (rhoyk+1)./2; 
-            pyk_struct = histogram(rhoxk,nbins);
-            pyk = pyk_struct.Values;
+            pyk = makeHistogram(rhoyk,nbins);
 
             map = zeros(N1,N2);
             for y = 2 : N1-1
