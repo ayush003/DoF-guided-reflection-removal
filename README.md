@@ -15,6 +15,11 @@ In this project we focus on removing the reflection using a single image based o
 
 ![Original Image](https://github.com/ayush003/DoF-guided-reflection-removal/blob/master/Source%20Image/2.jpg)
 
+<p align="center">
+  <img src="https://github.com/ayush003/DoF-guided-reflection-removal/blob/master/Source%20Image/2.jpg" width="350" title="hover text">
+  <img src="https://github.com/ayush003/DoF-guided-reflection-removal/blob/master/Output%20image/ob1.jpg" width="350" alt="accessibility text">
+</p>
+
 ## Requirements
 MATLAB version: R2018b or above
 
