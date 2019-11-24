@@ -22,7 +22,7 @@ function [ Pyramid ] = GetPyramid(img)
         px1_struct = histogram(rhox1,nbins); %computing the histogram for calculating the probabilities
         px1 = px1_struct.Values;               
         
-        rhoy1 = -imfilter(im,f2,'circular');
+        rhoy1 = -imfilter(im,f2,'circular'); %finding gradient along columns
         rhoy1 = (rhoy1+1)./2;
         py1_struct = histogram(rhox1,nbins);
         py1 = py1_struct.Values;
@@ -30,15 +30,15 @@ function [ Pyramid ] = GetPyramid(img)
         for j = 1:3
             [N1,N2] = size(im);
             G = fspecial('gaussian',[k(j) k(j)],5); %Gaussian blurring filter with mean = 0 and standard deviation = 5      
-            rhoxk = imfilter(im,G,'same');
+            rhoxk = imfilter(im,G,'same');          %applying the filter
             rhoyk = rhoxk;
         
-            rhoxk =  -imfilter(rhoxk,f1,'circular');
-            rhoxk = (rhoxk+1)./2; 
-            pxk_struct = histogram(rhoxk,nbins);
+            rhoxk =  -imfilter(rhoxk,f1,'circular'); %finding gradient along rows    
+            rhoxk = (rhoxk+1)./2;                    %rescaling the values
+            pxk_struct = histogram(rhoxk,nbins);     %computing the histogram for calculating the probabilities
             pxk = pxk_struct.Values;
         
-            rhoyk =  -imfilter(rhoyk,f2,'circular');
+            rhoyk =  -imfilter(rhoyk,f2,'circular'); %finding gradient along columns
             rhoyk = (rhoyk+1)./2; 
             pyk_struct = histogram(rhoxk,nbins);
             pyk = pyk_struct.Values;
@@ -54,45 +54,3 @@ function [ Pyramid ] = GetPyramid(img)
         DoF = D{1}+D{2}+D{3};
         Pyramid{i} = DoF;
     end
-    
-  
-    function LL = CalculateLogLikehood(x,y,dxk,dx1,dyk,dy1,pxk,px1,pyk,py1,nbins)
-        border = 2;
-        LL = 0;
-        for ii = y-border+1:y+border-1
-            for jj = x-border+1:x+border-1
-                vxk = dxk(ii,jj);
-                bxk = uint8(vxk*nbins);
-                if(bxk >= nbins) 
-                    bxk = bxk - 1;
-                end
-                
-                vx1 = dx1(ii,jj);
-                bx1 = uint8(vx1*nbins);
-                if(bx1 >= nbins)
-                    bx1 = bx1 - 1;
-                end
-                
-                vyk = dyk(ii,jj);
-                byk = uint8(vyk*nbins);
-                if(byk >= nbins) 
-                    byk = byk - 1;
-                end
-                
-                vy1 = dy1(ii,jj);
-                by1 = uint8(vy1*nbins);
-                if(by1 >= nbins)
-                    by1 = by1 - 1;
-                end
-                
-                pxk(bxk) = pxk(bxk)/(pxk(bxk) + px1(bx1));
-                px1(bx1) = px1(bx1)/(pxk(bxk) + px1(bx1));
-                
-                pyk(byk) = pyk(byk)/(pyk(byk) + py1(by1));
-                py1(by1) = py1(by1)/(pyk(byk) + py1(by1));
-                
-                
-                LL = LL + (pxk(bxk)*log(pxk(bxk)/px1(bx1)) + pyk(byk)*log(pyk(byk)/py1(by1)));
-            end
-        end
-
