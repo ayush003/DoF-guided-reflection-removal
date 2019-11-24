@@ -13,11 +13,10 @@ When taking photos through transparent surfaces, the captured pictures are usual
 Our project aims at separating the desired scene from the undesired reflections using reflection removal techniques. Various methods have been proposed for achieving this target. 
 In this project we focus on removing the reflection using a single image based on Depth of Field (DoF) confidence maps.
 
-![Original Image](https://github.com/ayush003/DoF-guided-reflection-removal/blob/master/Source%20Image/2.jpg)
 
 <p align="center">
   <img src="https://github.com/ayush003/DoF-guided-reflection-removal/blob/master/Source%20Image/2.jpg" width="350" title="hover text">
-  <img src="https://github.com/ayush003/DoF-guided-reflection-removal/blob/master/Output%20image/ob1.jpg" width="350" alt="accessibility text">
+  <img src="https://github.com/ayush003/DoF-guided-reflection-removal/blob/master/Output%20image/ob1.jpg" width="350" alt="hover text">
 </p>
 
 ## Requirements
