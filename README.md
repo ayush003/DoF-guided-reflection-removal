@@ -5,7 +5,9 @@ Members :
 Ayush Singhania, Siddharth Gaur, Gaurav Aswani
 
 ```
-When taking photos through transparent surfaces, the captured pictures are usually a mixture of both the desired scene and undesired reflections. Our project aims at separating the desired scene from the undesired reflections using reflection removal techniques. Various methods have been proposed for achieving this target. In this project we focus on removing the reflection using a single image based on Depth of Field (DoF) confidence maps.
+When taking photos through transparent surfaces, the captured pictures are usually a mixture of both the desired scene and undesired reflections.
+Our project aims at separating the desired scene from the undesired reflections using reflection removal techniques. Various methods have been proposed for achieving this target. 
+In this project we focus on removing the reflection using a single image based on Depth of Field (DoF) confidence maps.
 ```
 
 ## Requirements
