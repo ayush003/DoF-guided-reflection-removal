@@ -20,7 +20,7 @@ gxx = G.gxx;
 gyy = G.gyy;
 
 
-A1 = [gx;gy;gxx;gyy];
+A1 = [gx;gy;gxx;gyy];                     % concatenating the gradients to form the A matrix for IRLS method
 A = [A1;A1];
 b = [zeros(size(A1,1),1);A1*I(:)];
 f1 = [ones(imgSize*2,1)*w1;w2*ones(imgSize*2,1);w2*ones(imgSize,1)];
@@ -43,15 +43,16 @@ inds=setdiff([1:size(A,1)],[rinds1;rinds2]);
 A=A(inds,:);
 b=b(inds,:);
 f=f(inds);
-A_mat=A;
-B_mat=b;
+A_mat=A;          %final A matrix
+B_mat=b;          %final B matrix
 
 df = spdiags(f,0,length(f),length(f));
 A = df*A_mat; b=df*B_mat;
-x = (A'*A)\(A'*b);
+x = (A'*A)\(A'*b);  
 
 fprintf('Initial error = %g \n',sum(abs(A*x-b)));
 
+%IRLS method
 for j=1:num_iterations
       error = abs(A_mat*x-B_mat);
       error = max(error,0.00001);
@@ -61,6 +62,7 @@ for j=1:num_iterations
       fprintf('num_iterations= %d, current error = %g \n', j, sum(abs(A*x-b)));   
 end
 
+%returning the reflection and background images
 IR=reshape(x,h,w);
 IB=I-IR;
 
