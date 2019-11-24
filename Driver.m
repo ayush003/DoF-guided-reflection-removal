@@ -50,7 +50,7 @@ EdgeBackground = map1|map2|map3; % edgemap for Background
 %%
 %% Reflection image %%
 w = fspecial('sobel'); % 2D sobel filter
-for ch = 1:size(img,3)
+for ch = 1:size(im,3)
     im = im2double(im);
     Gx(:,:,ch) = imfilter(im(:,:,ch),w); % gradient along x
     Gy(:,:,ch) = imfilter(im(:,:,ch),w'); % gradient along y
