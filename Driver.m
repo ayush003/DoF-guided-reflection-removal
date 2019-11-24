@@ -2,12 +2,12 @@ clc;
 clear all;
 
 tic
-im = imread("153.jpg");
+im = imread("153.jpg");                         % reads the input image
 
 %% Background Image %%
-lab = makecform('srgb2lab');
-Im = applycform(im,lab); %Conversion to Lab color space
-L = Im(:,:,1); a = Im(:,:,2); b = Im(:,:,3); % 3 channels L, a and b
+lab = makecform('srgb2lab');                    % creates color transformation structure
+Im = applycform(im,lab);                        %Conversion to Lab color space
+L = Im(:,:,1); a = Im(:,:,2); b = Im(:,:,3);    % 3 channels L, a and b
 
 %%% Pyramid building for all channels %%%
 % Function GetPyramid returns DoFs for 3 different resolution images of the same reference image of one channel
@@ -18,22 +18,22 @@ Pyramidb = GetPyramid(b);
 %%% Fusion of 3 DoFs into one DoF for one channel %%%
 % L channel %
 [N1,N2,N3] = size(PyramidL{1});
-dl1 = PyramidL{1};
-dl2 = imresize(PyramidL{2},[N1 N2]); % upscaling
-dl3 = imresize(PyramidL{3},[N1 N2]); % upscaling
+dl1 = PyramidL{1};                      
+dl2 = imresize(PyramidL{2},[N1 N2]);    % upscaling to the resolution of the original image
+dl3 = imresize(PyramidL{3},[N1 N2]);    % upscaling to the resolution of the original image
 
-t = 0.4; % lambda = 0.4
-Lmap = (t*dl2 + (1-t)*dl3).*(dl1);
-Thl = threshold(Lmap); % thrsholding
-map1 = heaviside(Lmap - Thl); % edgemap for L color space
+t = 0.4;                                % lambda = 0.4
+Lmap = (t*dl2 + (1-t)*dl3).*(dl1);      % DoF of L channel
+Thl = threshold(Lmap);                  % initial threshold value
+map1 = heaviside(Lmap - Thl);           % edgemap for L color space
 
 % a channel %
 da1 = Pyramida{1};
-da2 = imresize(Pyramida{2},[N1 N2]); % upscaling
-da3 = imresize(Pyramida{3},[N1 N2]); % upscaling
+da2 = imresize(Pyramida{2},[N1 N2]);    % upscaling to the resolution of the original image
+da3 = imresize(Pyramida{3},[N1 N2]);    % upscaling to the resolution of the original image
 
-amap = (t*da2 + (1-t)*da3).*(da1);
-Tha = Thl/1.5;
+amap = (t*da2 + (1-t)*da3).*(da1);      % Dof of a channel
+Tha = Thl/1.5;                          
 map2 = heaviside(amap - Tha); % edgemap for a color space
 
 % b channel %
