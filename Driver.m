@@ -10,8 +10,7 @@ Im = applycform(im,lab); %Conversion to Lab color space
 L = Im(:,:,1); a = Im(:,:,2); b = Im(:,:,3); % 3 channels L, a and b
 
 %%% Pyramid building for all channels %%%
-% Function GetPyramid returns DoFs for 3 different resolution
-% images of the same reference image of one channel
+% Function GetPyramid returns DoFs for 3 different resolution images of the same reference image of one channel
 PyramidL = GetPyramid(L);
 Pyramida = GetPyramid(a);
 Pyramidb = GetPyramid(b);
