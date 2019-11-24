@@ -35,7 +35,7 @@ end
 x = x-1; y = y-1;
 indexGx1 = indexGx1(1:x);
 indexGx2 = indexGx2(1:x);
-indexGy1 = indexG21(1:y);
+indexGy1 = indexGy1(1:y);
 indexGy2 = indexGy2(1:y);
 valueGx = valueGx(1:x);
 valueGy = valueGy(1:y);
