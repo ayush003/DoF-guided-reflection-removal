@@ -2,7 +2,7 @@ clc;
 clear all;
 
 tic
-im = imread("153.jpg");                         % reads the input image
+im = imread("./Source\ Images/1.jpg");                         % reads the input image
 
 %% Background Image %%
 lab = makecform('srgb2lab');                    % creates color transformation structure
