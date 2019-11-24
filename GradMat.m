@@ -51,7 +51,7 @@ nzgxy = sum(gxy~=0,2);
 fzgxx = nzgxx ~= 3;
 fzgyy = nzgyy ~= 3;
 fzgxy = nzgxy ~= 4;
-gxx(fzGxx,:)=0;
-gyy(fzGyy,:)=0;
-gxy(fzGxy,:)=0;
+gxx(fzgxx,:)=0;
+gyy(fzgyy,:)=0;
+gxy(fzgxy,:)=0;
 end
