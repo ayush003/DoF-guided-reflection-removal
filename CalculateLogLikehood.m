@@ -37,3 +37,4 @@ function LL = CalculateLogLikehood(x,y,dxk,dx1,dyk,dy1,pxk,px1,pyk,py1,nbins)
                 LL = LL + (pxk(bxk)*log(pxk(bxk)/px1(bx1)) + pyk(byk)*log(pyk(byk)/py1(by1)));
             end
         end
+
