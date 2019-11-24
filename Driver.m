@@ -64,24 +64,24 @@ EdgeReflection = mapR;                      % final reflection edgemap which wil
 % Masking from background edgemap and final reflection edgemap generation
 for i = 1:length(reflectionPoints)
     pnt = reflectionPoints(i);                  % index around which the patch is to be extracted
-    [Hp,rows,cols] = PatchExtract([N1,N2],pnt); % 
+    [Hp,rows,cols] = PatchExtract([N1,N2],pnt); % Hp stores the patch matrix which is used as a mask for finding the final reflection edgemap
     m = EdgeBackground(Hp);
-    flag = find(m==1);
-    if(EdgeBackground(pnt)==1||~isempty(flag)) 
-        EdgeReflection(pnt)= 0;
+    flag = find(m==1);                          % stores the indices for which the pixel value is one
+    if(EdgeBackground(pnt)==1||~isempty(flag))  % acts as the negation of the mask which we got by the background edgemap
+        EdgeReflection(pnt)= 0;                 
     end
 end
 
 %% Layer Reconstruction %%
-indR = find(EdgeReflection==1);
-indB = find(EdgeBackground==1);
+indR = find(EdgeReflection==1);             % stores the indices for which pixel values are one
+indB = find(EdgeBackground==1);             % stores the indices for which pixel values are one
 
 [h,w,d] = size(grad);
 G = struct;
-[G.gx,G.gy,G.gxx,G.gyy,G.gxy] = GradMat(w,h);
+[G.gx,G.gy,G.gxx,G.gyy,G.gxy] = GradMat(w,h);   % kth derivative filter
 
 for ch = 1:3
-    [R(:,:,ch),B(:,:,ch)] = layerReconstruct(im(:,:,ch),G,indR,indB);
+    [R(:,:,ch),B(:,:,ch)] = layerReconstruct(im(:,:,ch),G,indR,indB);   % reconstructs final coloured layer for each channel for both reflection and background image
 end
 
 %%
